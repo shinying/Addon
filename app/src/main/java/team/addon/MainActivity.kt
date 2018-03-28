@@ -1,9 +1,11 @@
 package team.addon
 
 import android.app.PendingIntent.getActivity
+import android.content.res.Resources
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.app.ActionBar
+import kotlinx.android.synthetic.main.activity_main.*
+import android.graphics.Point
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,7 +13,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val ab = supportActionBar
-        ab?.hide()
+        supportActionBar?.hide()
+
+        val display = windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+        welcome_postIt.height = size.x - 16
+
+        dot1.imageAlpha = 192
+        
     }
 }

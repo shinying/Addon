@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Addon</string>
+    <string name="wall_pin_input">Type the wall pin</string>
 </resources>
