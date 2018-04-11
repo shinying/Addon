@@ -45,8 +45,8 @@ class PostIt(swipeView: SwipePlaceHolderView) {
 
     @Resolve
     fun onResolved() {
-        post_content?.setText(R.string.post_text)
-        input?.setHint(R.string.input_hint)
+        post_content?.setText(R.string.join)
+        input?.setHint(R.string.join_hint)
     }
 
 }

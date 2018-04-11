@@ -37,8 +37,6 @@ class MainActivity : AppCompatActivity() {
         swipeView.addView(PostIt(swipeView))
         swipeView.addView(PostIt(swipeView))
 
-        // Initial setting for the step hints
-
 
 
         swipeView.addItemRemoveListener {
@@ -57,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                     })
 
                     build_own.startAnimation(anim)
-
+                    
                 }
                 1 -> {
                     switchDot(dot2, dot3)
