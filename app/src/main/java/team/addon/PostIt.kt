@@ -1,15 +1,12 @@
 package team.addon
 
-import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.annotations.Layout
 import com.mindorks.placeholderview.annotations.NonReusable
-import com.mindorks.placeholderview.annotations.Resolve
 import com.mindorks.placeholderview.annotations.View
-import com.mindorks.placeholderview.annotations.swipe.SwipeOut
 import com.mindorks.placeholderview.annotations.swipe.SwipeView
 
 /**
@@ -33,20 +30,9 @@ class PostIt(swipeView: SwipePlaceHolderView) {
 
     protected var mSwipeView: SwipePlaceHolderView = swipeView
 
-    fun setStepHint(dotCur: ImageView, dotNext: ImageView) {
-        dotCur.alpha = 0.2F
-        dotNext.alpha = 0.8F
-    }
-
-    @SwipeOut
-    fun onSwipedOut() {
-        Log.d("DEBUG", "onSwipedOut")
-    }
-
-    @Resolve
-    fun onResolved() {
-        post_content?.setText(R.string.join)
-        input?.setHint(R.string.join_hint)
+    fun setText(join: String, join_hint: String) {
+        post_content?.text = join
+        input?.hint = join_hint
     }
 
 }

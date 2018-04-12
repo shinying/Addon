@@ -6,8 +6,8 @@
     <string name="join_hint_2">Name Yourself</string>
     <string name="join1">Start your creative adventure!</string>
     <string name="join2">You are joining </string>
-    <string name="join3_for">Hello </string>
-    <string name="join3_mid">. Welcome to </string>
-    <string name="join3_late">. Have a nice trip!</string>
+    <string name="join3_for">Hello</string>
+    <string name="join3_mid">.\nWelcome to </string>
+    <string name="join3_late">. Have a nice trip with your partners!</string>
     <string name="post_attr" />
 </resources>
