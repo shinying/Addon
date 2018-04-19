@@ -131,6 +131,9 @@ class JoinActivity : AppCompatActivity() {
                     dot1.visibility = View.GONE
                     dot2.visibility = View.GONE
                     dot3.visibility = View.GONE
+                    /**2018.04.18 shihyun
+                    start new activity*/
+                    startActivity(Intent(this, DrawActivity::class.java))
                 }
             }
         }

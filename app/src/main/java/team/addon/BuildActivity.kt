@@ -14,6 +14,7 @@ import com.mindorks.placeholderview.SwipeViewBuilder
 import com.pawegio.kandroid.textWatcher
 import kotlinx.android.synthetic.main.activity_build.*
 
+
 const val MAX_TAG = 3
 
 class BuildActivity : AppCompatActivity() {
@@ -154,6 +155,7 @@ class BuildActivity : AppCompatActivity() {
                                 swipeView.enableTouchSwipe()
                         }
                     }
+
                 }
 
                 0 -> {
@@ -163,6 +165,8 @@ class BuildActivity : AppCompatActivity() {
                 }
             }
         }
+
+
     }
 
     private fun switchDot(curDot: ImageView, nextDot: ImageView) {
@@ -197,4 +201,9 @@ class BuildActivity : AppCompatActivity() {
     }
 
 
+
 }
+
+
+
+
