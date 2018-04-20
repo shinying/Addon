@@ -17,8 +17,5 @@ class DrawPostIt(swipeView2: SwipePlaceHolderView) {
     @SwipeView
     var view: android.view.View? = null
 
-    //fun setText(join: String, join_hint: String) {
-    //    postContent?.text = join
-    //    input?.hint = join_hint
-    //}
+
 }

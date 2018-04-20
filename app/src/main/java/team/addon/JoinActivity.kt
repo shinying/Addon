@@ -32,10 +32,6 @@ class JoinActivity : AppCompatActivity() {
 
     private var memberName = ""
 
-    private val locker = Object()
-
-    private var commandLock = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_join)
@@ -117,19 +113,9 @@ class JoinActivity : AppCompatActivity() {
                     val params = HashMap<String, String>()
                     params["wallPin"] = wallPin
 
-                    Log.w("step", "before connect server")
-
-                    wallName = connectServer(EndPoints.wallPin, params)
-
-                    Log.w("step", "after connect server")
-
-                    commandLocker()
-
-
+                    connectServer(EndPoints.wallPin, params, p2)
+                    
                     // set p2 layout
-                    val p2Welcome = String.format(getString(R.string.join_wall_name), wallName)
-
-                    p2.setText(p2Welcome, getString(R.string.hint_member_name))
                     p2.input?.setOnEditorActionListener { textView, i, event ->
                         if(i != 0 && EditorInfo.IME_MASK_ACTION != 0){
                             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -181,22 +167,18 @@ class JoinActivity : AppCompatActivity() {
     }
 
     // fetch data from server
-    private fun connectServer(url: String, params: HashMap<String, String>): String {
-
-        commandLock = true
-
-        Log.e("commeandLock", commandLock.toString())
-
-        var get = ""
+    private fun connectServer(url: String, params: HashMap<String, String>, post: AddWall) {
 
         //creating volley string request
         val stringRequest = object : StringRequest(Request.Method.POST, url,
 
                 Response.Listener<String> { response ->
                     Log.e("post", response.substring(0,5))
-                    get = response.substring(0,5)
-                    commandLock = false
 
+                    wallName = response.substring(0,5)
+
+                    val p2Welcome = String.format(getString(R.string.join_wall_name), wallName)
+                    post.setText(p2Welcome, getString(R.string.hint_member_name))
                 },
 
                 Response.ErrorListener { volleyError ->
@@ -212,28 +194,5 @@ class JoinActivity : AppCompatActivity() {
 
         //adding request to queue
         VolleySingleton.instance?.addToRequestQueue(stringRequest)
-
-        synchronized (locker) { locker.notify() }
-
-        return get
-    }
-
-    // Locker
-    private fun commandLocker() {
-
-        // if lock, then wait until unlock
-        synchronized(locker) {
-            Log.i("commandlock", commandLock.toString())
-
-            while (commandLock) {
-                try {
-                    locker.wait()
-                    Log.e("locker", "waiting")
-                } catch (e: InterruptedException) {
-                    Log.e("Locker", "Thread sleep error in command locker section.")
-                }
-            }
-            Log.e("locker", "keep going")
-        }
     }
 }
