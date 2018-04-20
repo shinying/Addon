@@ -8,7 +8,7 @@ import com.mindorks.placeholderview.annotations.View
 import com.mindorks.placeholderview.annotations.swipe.SwipeView
 
 @NonReusable
-@Layout(R.layout.drawing_post_it)
+@Layout(R.layout.view_draw_post_it)
 class DrawPostIt(swipeView2: SwipePlaceHolderView) {
 
     @View(R.id.cons_layout2)
