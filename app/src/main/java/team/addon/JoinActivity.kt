@@ -114,6 +114,7 @@ class JoinActivity : AppCompatActivity() {
 
                     connectServer(EndPoints.wallPin, params, p2)
 
+
                     // set p2 layout
                     p2.input?.setOnEditorActionListener { textView, i, event ->
                         if(i != 0 && EditorInfo.IME_MASK_ACTION != 0){
@@ -178,6 +179,7 @@ class JoinActivity : AppCompatActivity() {
                     wallName = response.substring(0,5)
 
                     val p2Welcome = String.format(getString(R.string.join_wall_name), wallName)
+
                     post.setText(p2Welcome, getString(R.string.hint_member_name))
                 },
 
