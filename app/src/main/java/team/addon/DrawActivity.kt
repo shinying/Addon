@@ -1,6 +1,7 @@
 package team.addon
 
 import android.os.Bundle
+import android.support.constraint.ConstraintSet
 import android.support.v7.app.AppCompatActivity
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
@@ -24,6 +25,15 @@ class DrawActivity : AppCompatActivity() {
                 .setSwipeDecor(SwipeDecor()
                         .setPaddingLeft(20)
                         .setRelativeScale(0.01f))
+        val d1 = DrawPostIt(swipeView2)
+        //val d2 = DrawPostIt(swipeView2)
+        //val d3 = DrawPostIt(swipeView2)
+        val consSet = ConstraintSet()
+        consSet.clone(d1.consLayout2)
+        //consSet2.centerVertically(R.id.input, R.id.post_it_board, ConstraintSet.TOP, 8,
+        //        R.id.post_it_board, ConstraintSet.BOTTOM, 8, 0.1F)
+        //consSet2.centerHorizontallyRtl(R.id.input, R.id.post_it_board, ConstraintSet.START, 8, R.id.post_it_board, ConstraintSet.END, 8, 0.3F)
+        consSet.applyTo(d1.consLayout2)
 
 
     }
