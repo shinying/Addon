@@ -40,7 +40,6 @@ class JoinActivity : AppCompatActivity() {
 
         dot1.alpha = 0.8F
 
-
         // Build the first three post-it
         swipeView.getBuilder<SwipePlaceHolderView, SwipeViewBuilder<SwipePlaceHolderView>>()
                 .setDisplayViewCount(5)
@@ -69,7 +68,7 @@ class JoinActivity : AppCompatActivity() {
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(p1.input?.windowToken, 0)
                 wallPin = p1.input?.text.toString()
-                swipeView.doSwipe(false)
+//                swipeView.doSwipe(false)
 
                 return@setOnEditorActionListener true
             }
@@ -114,14 +113,14 @@ class JoinActivity : AppCompatActivity() {
                     params["wallPin"] = wallPin
 
                     connectServer(EndPoints.wallPin, params, p2)
-                    
+
                     // set p2 layout
                     p2.input?.setOnEditorActionListener { textView, i, event ->
                         if(i != 0 && EditorInfo.IME_MASK_ACTION != 0){
                             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                             imm.hideSoftInputFromWindow(p2.input?.windowToken, 0)
                             memberName = p2.input?.text.toString()
-                            swipeView.doSwipe(false)
+//                            swipeView.doSwipe(false)
 
                             return@setOnEditorActionListener true
                         }
@@ -148,8 +147,9 @@ class JoinActivity : AppCompatActivity() {
                     dot1.visibility = View.GONE
                     dot2.visibility = View.GONE
                     dot3.visibility = View.GONE
-                    /**2018.04.18 shihyun
-                    start new activity*/
+
+                    /* 2018.04.18 shihyun
+                    start new activity */
                     startActivity(Intent(this, DrawActivity::class.java))
                 }
             }
