@@ -200,12 +200,6 @@ class BuildActivity : AppCompatActivity() {
         else
             swipeView.disableTouchSwipe()
     }
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> b4e277700c064d44fbe8af64e64a9f6bed1fced5
 }
 
 
