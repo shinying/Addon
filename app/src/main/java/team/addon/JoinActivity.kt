@@ -5,11 +5,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.InputType
+import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import android.widget.Toast
+import com.android.volley.AuthFailureError
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
@@ -20,6 +26,16 @@ import kotlinx.android.synthetic.main.activity_join.*
 
 class JoinActivity : AppCompatActivity() {
 
+    private var wallPin = ""
+
+    private var wallName = ""
+
+    private var memberName = ""
+
+    private val locker = Object()
+
+    private var commandLock = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_join)
@@ -29,7 +45,7 @@ class JoinActivity : AppCompatActivity() {
         dot1.alpha = 0.8F
 
 
-        // build the first three post-it
+        // Build the first three post-it
         swipeView.getBuilder<SwipePlaceHolderView, SwipeViewBuilder<SwipePlaceHolderView>>()
                 .setDisplayViewCount(5)
                 .setIsUndoEnabled(true)
@@ -38,13 +54,9 @@ class JoinActivity : AppCompatActivity() {
                         .setPaddingLeft(20)
                         .setRelativeScale(0.01f))
 
-        val p1 = PostIt(swipeView)
-        val p2 = PostIt(swipeView)
-        val p3 = PostIt(swipeView)
-
-        var wallPin = ""
-        var wallName = ""
-        var memberName = ""
+        val p1 = AddWall(swipeView)
+        val p2 = AddWall(swipeView)
+        val p3 = AddWall(swipeView)
 
         swipeView.addView(p1)
         swipeView.addView(p2)
@@ -52,6 +64,7 @@ class JoinActivity : AppCompatActivity() {
 
         swipeView.disableTouchSwipe()
 
+        // Set the layout for post 1
         p1.setText(getString(R.string.join_welcome), getString(R.string.hint_wall_pin))
 
         p1.input?.inputType = InputType.TYPE_CLASS_NUMBER
@@ -68,6 +81,7 @@ class JoinActivity : AppCompatActivity() {
                 return@setOnEditorActionListener false
         }
 
+        // Add listener to input: EditText
         p1.input?.textWatcher {
             afterTextChanged {
                 wallPin = p1.input?.text.toString()
@@ -80,13 +94,15 @@ class JoinActivity : AppCompatActivity() {
             startActivity(Intent(this, BuildActivity::class.java))
         }
 
-
+        // Add listener to swipeView
         swipeView.addItemRemoveListener {
             when (it) {
                 2 -> {
+
                     switchDot(dot1, dot2)
                     swipeView.disableTouchSwipe()
 
+                    // Let build_own fade out
                     val anim = AlphaAnimation(1.0f, 0.0f)
                     anim.duration = 200
                     anim.animListener {
@@ -96,6 +112,21 @@ class JoinActivity : AppCompatActivity() {
                     }
                     build_own.startAnimation(anim)
 
+
+                    // connect server to get wall pin
+                    val params = HashMap<String, String>()
+                    params["wallPin"] = wallPin
+
+                    Log.w("step", "before connect server")
+
+                    wallName = connectServer(EndPoints.wallPin, params)
+
+                    Log.w("step", "after connect server")
+
+                    commandLocker()
+
+
+                    // set p2 layout
                     val p2Welcome = String.format(getString(R.string.join_wall_name), wallName)
 
                     p2.setText(p2Welcome, getString(R.string.hint_member_name))
@@ -144,5 +175,62 @@ class JoinActivity : AppCompatActivity() {
         nextDot.animate()
                 .alpha(0.8F)
                 .duration = 200
+    }
+
+    // fetch data from server
+    private fun connectServer(url: String, params: HashMap<String, String>): String {
+
+        commandLock = true
+
+        Log.e("commeandLock", commandLock.toString())
+
+        var get = ""
+
+        //creating volley string request
+        val stringRequest = object : StringRequest(Request.Method.POST, url,
+
+                Response.Listener<String> { response ->
+                    Log.e("post", response.substring(0,5))
+                    get = response.substring(0,5)
+                    commandLock = false
+
+                },
+
+                Response.ErrorListener { volleyError ->
+                    Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show()
+
+                }) {
+
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                return params
+            }
+        }
+
+        //adding request to queue
+        VolleySingleton.instance?.addToRequestQueue(stringRequest)
+
+        synchronized (locker) { locker.notify() }
+
+        return get
+    }
+
+    // Locker
+    private fun commandLocker() {
+
+        // if lock, then wait until unlock
+        synchronized(locker) {
+            Log.i("commandlock", commandLock.toString())
+
+            while (commandLock) {
+                try {
+                    locker.wait()
+                    Log.e("locker", "waiting")
+                } catch (e: InterruptedException) {
+                    Log.e("Locker", "Thread sleep error in command locker section.")
+                }
+            }
+            Log.e("locker", "keep going")
+        }
     }
 }

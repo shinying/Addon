@@ -22,6 +22,12 @@ class BuildActivity : AppCompatActivity() {
 
     private var tagBool = booleanArrayOf(false, false, false, false, false, false)
 
+    private var wallName = ""
+
+    private var wallPrivacy = -1
+
+    private var creatorName = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_build)
@@ -40,20 +46,15 @@ class BuildActivity : AppCompatActivity() {
                         .setPaddingLeft(20)
                         .setRelativeScale(0.01f))
 
-        val p1 = PostIt(swipeView)
-        val p2 = PostIt(swipeView)
-        val p3 = PostIt(swipeView)
+        val p1 = AddWall(swipeView)
+        val p2 = AddWall(swipeView)
+        val p3 = AddWall(swipeView)
 
         swipeView.addView(p1)
         swipeView.addView(p2)
         swipeView.addView(p3)
 
         swipeView.disableTouchSwipe()
-
-        var wallName = ""
-        var wallPrivacy = -1
-        var creatorName: String
-
 
         val consSet = ConstraintSet()
         consSet.clone(p1.consLayout)
@@ -183,18 +184,16 @@ class BuildActivity : AppCompatActivity() {
             tagCnt--
         }
 
-        else if(tagCnt < MAX_TAG) {
+        else if(tagCnt < team.addon.MAX_TAG) {
             tag.setTypeface(Typeface.create(tag.typeface, Typeface.NORMAL), Typeface.BOLD)
             tagBool[i] = true
             tagCnt++
         }
 
-        if(Range(1, MAX_TAG).contains(tagCnt))
+        if(Range(1, team.addon.MAX_TAG).contains(tagCnt))
             swipeView.enableTouchSwipe()
 
         else
             swipeView.disableTouchSwipe()
     }
-
-
 }
