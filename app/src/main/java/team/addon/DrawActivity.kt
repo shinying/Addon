@@ -27,7 +27,7 @@ class DrawActivity : AppCompatActivity() {
         val d1 = DrawPostIt(swipeView2)
 
         swipeView2.addView(d1)
-        swipeView2.lockViews();
+        swipeView2.lockViews()
 
 
 

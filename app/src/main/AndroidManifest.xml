@@ -23,10 +23,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".BuildActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".DrawPostIt" />
+
+        <activity
+            android:name=".DrawActivity" />
     </application>
 
 </manifest>
