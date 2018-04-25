@@ -9,6 +9,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import team.addon.R
 import java.io.OutputStream
 
 
@@ -29,11 +30,11 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     init {
         // bitmap
         val width = Resources.getSystem().displayMetrics.widthPixels
-        bitmap = Bitmap.createBitmap(width, 800, Bitmap.Config.ARGB_8888)
+        bitmap = Bitmap.createBitmap(width, 330 * resources.displayMetrics.density.toInt(), Bitmap.Config.RGB_565)
 
         // Canvas
         mCanvas = Canvas(bitmap)
-        mCanvas.drawColor(Color.GRAY)
+        mCanvas.drawColor(resources.getColor(R.color.main))
 
         // Paint
         paint = Paint()

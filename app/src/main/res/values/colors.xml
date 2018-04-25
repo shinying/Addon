@@ -2,10 +2,11 @@
 <resources>
     <color name="colorPrimary">@android:color/transparent</color>
     <color name="colorPrimaryDark">#37474f</color>
-    <color name="colorPrimaryBright">#f5f5f5</color>
+    <color name="colorPrimaryDraw">#4d606e</color>
     <color name="colorAccent">#364f6b</color>
     <color name="actionBarText">#37474f</color>
     <color name="action_bar_text" />
     <color name="main">#ffd54f</color>
+    <color name="icon">#f7fbfc</color>
 
 </resources>
