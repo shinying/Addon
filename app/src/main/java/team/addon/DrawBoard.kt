@@ -18,7 +18,7 @@ import java.io.OutputStream
  */
 
 
-class DrawBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var paint: Paint
     private var bitmap: Bitmap
     private var mCanvas: Canvas
