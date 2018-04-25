@@ -18,4 +18,6 @@ class DrawPostIt(swipeView2: SwipePlaceHolderView){
     @SwipeView
     var view: android.view.View? = null
 
+
+
 }
