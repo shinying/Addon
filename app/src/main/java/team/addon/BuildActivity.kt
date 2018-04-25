@@ -4,15 +4,20 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.support.constraint.ConstraintSet
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.util.Range
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
 import com.pawegio.kandroid.textWatcher
 import kotlinx.android.synthetic.main.activity_build.*
+import org.json.JSONObject
 
 
 const val MAX_TAG = 3
@@ -27,7 +32,9 @@ class BuildActivity : AppCompatActivity() {
 
     private var wallPrivacy = -1
 
-    private var creatorName = ""
+    private var builderName = ""
+
+    private var wallPin = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -151,8 +158,8 @@ class BuildActivity : AppCompatActivity() {
                     p3.input?.hint = getString(R.string.hint_member_name).toString()
                     p3.input?.textWatcher {
                         afterTextChanged {
-                            creatorName = p3.input?.text.toString()
-                            if(!creatorName.isBlank())
+                            builderName = p3.input?.text.toString()
+                            if(!builderName.isBlank())
                                 swipeView.enableTouchSwipe()
                         }
                     }
@@ -160,14 +167,26 @@ class BuildActivity : AppCompatActivity() {
                 }
 
                 0 -> {
+
+                    val wallInfo = JSONObject()
+                    wallInfo.put("wallName", wallName)
+                    wallInfo.put("builder", builderName)
+                    wallInfo.put("#product", tagBool[0])
+                    wallInfo.put("#issue", tagBool[1])
+                    wallInfo.put("#knowledge", tagBool[2])
+                    wallInfo.put("#process", tagBool[3])
+                    wallInfo.put("#activity", tagBool[4])
+                    wallInfo.put("#others", tagBool[5])
+
+
+                    getWallPin(EndPoints.buildWall, wallInfo)
+
                     dot1.visibility = View.GONE
                     dot2.visibility = View.GONE
                     dot3.visibility = View.GONE
                 }
             }
         }
-
-
     }
 
     private fun switchDot(curDot: ImageView, nextDot: ImageView) {
@@ -199,6 +218,24 @@ class BuildActivity : AppCompatActivity() {
 
         else
             swipeView.disableTouchSwipe()
+    }
+
+    private fun getWallPin(url: String, params: JSONObject) {
+
+        //creating volley string request
+        val jsonObjectRequest = object : JsonObjectRequest(Request.Method.POST, url, params,
+
+                Response.Listener<JSONObject> { response ->
+
+                    wallPin = response.optString("wallPin", "0000")
+                },
+
+                Response.ErrorListener { volleyError ->
+                    Log.e("err", volleyError.toString())
+                }) { }
+
+        //adding request to queue
+        VolleySingleton.instance?.addToRequestQueue(jsonObjectRequest)
     }
 }
 

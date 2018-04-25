@@ -11,17 +11,16 @@ import android.view.animation.AlphaAnimation
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
-import android.widget.Toast
-import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.JsonObjectRequest
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
 import com.pawegio.kandroid.animListener
 import com.pawegio.kandroid.textWatcher
 import kotlinx.android.synthetic.main.activity_join.*
+import org.json.JSONObject
 
 
 class JoinActivity : AppCompatActivity() {
@@ -109,10 +108,10 @@ class JoinActivity : AppCompatActivity() {
 
 
                     // connect server to get wall pin
-                    val params = HashMap<String, String>()
-                    params["wallPin"] = wallPin
+                    val params = JSONObject()
+                    params.put("wallPin", wallPin)
 
-                    connectServer(EndPoints.wallPin, params, p2)
+                    getWallName(EndPoints.joinWall, params, p2)
 
 
                     // set p2 layout
@@ -149,8 +148,6 @@ class JoinActivity : AppCompatActivity() {
                     dot2.visibility = View.GONE
                     dot3.visibility = View.GONE
 
-                    /* 2018.04.18 shihyun
-                    start new activity */
                     startActivity(Intent(this, DrawActivity::class.java))
                 }
             }
@@ -168,15 +165,16 @@ class JoinActivity : AppCompatActivity() {
     }
 
     // fetch data from server
-    private fun connectServer(url: String, params: HashMap<String, String>, post: AddWall) {
+    private fun getWallName(url: String, params: JSONObject, post: AddWall) {
 
         //creating volley string request
-        val stringRequest = object : StringRequest(Request.Method.POST, url,
+        val jsonObjectRequest = object : JsonObjectRequest (Request.Method.POST, url, params,
 
-                Response.Listener<String> { response ->
-                    Log.e("post", response.substring(0,5))
+                Response.Listener<JSONObject> { response ->
 
-                    wallName = response.substring(0,5)
+                    Log.e("response", response.toString())
+
+                    wallName = response.optString("wallPin", "none")
 
                     val p2Welcome = String.format(getString(R.string.join_wall_name), wallName)
 
@@ -184,17 +182,11 @@ class JoinActivity : AppCompatActivity() {
                 },
 
                 Response.ErrorListener { volleyError ->
-                    Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show()
+                    Log.e("err", volleyError.toString())
 
-                }) {
-
-            @Throws(AuthFailureError::class)
-            override fun getParams(): Map<String, String> {
-                return params
-            }
-        }
+                }) { }
 
         //adding request to queue
-        VolleySingleton.instance?.addToRequestQueue(stringRequest)
+        VolleySingleton.instance?.addToRequestQueue(jsonObjectRequest)
     }
 }
