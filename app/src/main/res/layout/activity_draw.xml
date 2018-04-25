@@ -10,10 +10,14 @@
     <devdon.com.painter.PaintBoard
         android:id="@+id/layout_paint_board"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
+        android:layout_marginTop="8dp"
+        android:translationZ="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3"  />
 
     <com.mindorks.placeholderview.SwipePlaceHolderView
         android:id="@+id/swipeView2"
@@ -26,8 +30,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
-<<<<<<< HEAD
-=======
 
     <LinearLayout
         android:id="@+id/tool_bar"
@@ -74,6 +76,5 @@
             android:background="@android:color/transparent"
             app:srcCompat="@drawable/ic_brush" />
     </LinearLayout>
->>>>>>> 035398d96655b378a62cf210fa7a2590a5fb8c4d
 
 </android.support.constraint.ConstraintLayout>
