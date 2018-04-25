@@ -59,7 +59,7 @@ class DrawActivity : AppCompatActivity() {
         //saveButton.setOnClickListener(saveClickHandler)
     }
 
-    /**private fun checkWritable():Boolean {
+    private fun checkWritable():Boolean {
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),0)
             return false
@@ -69,7 +69,7 @@ class DrawActivity : AppCompatActivity() {
     }
 
 
-    private val saveClickHandler = View.OnClickListener { view ->
+    /**private val saveClickHandler = View.OnClickListener { view ->
         if(checkWritable()){
             try {
                 val fileName = (System.currentTimeMillis() / 1000).toString() + ".jpg"

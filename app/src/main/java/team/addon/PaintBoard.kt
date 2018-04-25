@@ -70,8 +70,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         return true
     }
 
-    fun saveBitmap(stream: OutputStream) {
+    /**fun saveBitmap(stream: OutputStream) {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
 
-    }
+    }*/
 }

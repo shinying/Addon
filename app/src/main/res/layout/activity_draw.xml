@@ -7,6 +7,33 @@
     android:background="@color/colorPrimaryDraw"
     tools:context="team.addon.DrawActivity">
 
+<<<<<<< HEAD
+    <devdon.com.painter.PaintBoard
+        android:id="@+id/layout_paint_board"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="8dp"
+        android:translationZ="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3"  />
+
+    <com.mindorks.placeholderview.SwipePlaceHolderView
+        android:id="@+id/swipeView2"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="8dp"
+        android:translationZ="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
+
+=======
+>>>>>>> a64e31a3f23f54c9555c18cc162c6d1fe9d15ad1
     <LinearLayout
         android:id="@+id/tool_bar"
         android:layout_width="0dp"
@@ -52,6 +79,8 @@
             android:background="@android:color/transparent"
             app:srcCompat="@drawable/ic_brush" />
     </LinearLayout>
+<<<<<<< HEAD
+=======
 
 
     <com.mindorks.placeholderview.SwipePlaceHolderView
@@ -67,5 +96,6 @@
         app:layout_constraintVertical_bias="0.4" >
     </com.mindorks.placeholderview.SwipePlaceHolderView>
 
+>>>>>>> a64e31a3f23f54c9555c18cc162c6d1fe9d15ad1
 
 </android.support.constraint.ConstraintLayout>
