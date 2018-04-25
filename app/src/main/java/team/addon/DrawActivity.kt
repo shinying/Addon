@@ -1,23 +1,13 @@
 package team.addon
 
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.appcompat.R.styleable.View
 import android.util.Log
-import android.widget.Toast
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
 import devdon.com.painter.PaintBoard
 import kotlinx.android.synthetic.main.activity_draw.*
-import java.io.File
-import java.io.FileOutputStream
 
 
 class DrawActivity : AppCompatActivity() {

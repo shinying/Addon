@@ -15,8 +15,8 @@ import com.mindorks.placeholderview.annotations.swipe.SwipeView
  * Created by shinying.lee on 2018/3/29.
  */
 @NonReusable
-@Layout(R.layout.view_add_wall)
-class AddWall(swipeView: SwipePlaceHolderView) {
+@Layout(R.layout.view_add_post_it)
+class AddPostIt(swipeView: SwipePlaceHolderView) {
 
     @View(R.id.cons_layout)
     var consLayout: ConstraintLayout? = ConstraintLayout(swipeView.context)

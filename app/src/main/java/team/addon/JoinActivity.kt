@@ -49,9 +49,9 @@ class JoinActivity : AppCompatActivity() {
                         .setPaddingLeft(20)
                         .setRelativeScale(0.01f))
 
-        val p1 = AddWall(swipeView)
-        val p2 = AddWall(swipeView)
-        val p3 = AddWall(swipeView)
+        val p1 = AddPostIt(swipeView)
+        val p2 = AddPostIt(swipeView)
+        val p3 = AddPostIt(swipeView)
 
         swipeView.addView(p1)
         swipeView.addView(p2)
@@ -166,7 +166,7 @@ class JoinActivity : AppCompatActivity() {
     }
 
     // fetch data from server
-    private fun getWallName(url: String, params: JSONObject, post: AddWall) {
+    private fun getWallName(url: String, params: JSONObject, post: AddPostIt) {
 
         //creating volley string request
         val jsonObjectRequest = object : JsonObjectRequest (Request.Method.POST, url, params,

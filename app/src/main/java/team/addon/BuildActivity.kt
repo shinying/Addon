@@ -54,9 +54,9 @@ class BuildActivity : AppCompatActivity() {
                         .setPaddingLeft(20)
                         .setRelativeScale(0.01f))
 
-        val p1 = AddWall(swipeView)
-        val p2 = AddWall(swipeView)
-        val p3 = AddWall(swipeView)
+        val p1 = AddPostIt(swipeView)
+        val p2 = AddPostIt(swipeView)
+        val p3 = AddPostIt(swipeView)
 
         swipeView.addView(p1)
         swipeView.addView(p2)
