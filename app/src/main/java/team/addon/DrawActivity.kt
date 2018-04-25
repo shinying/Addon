@@ -9,6 +9,7 @@ import android.os.Environment
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.appcompat.R.styleable.View
+import android.util.Log
 import android.widget.Toast
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
@@ -38,7 +39,13 @@ class DrawActivity : AppCompatActivity() {
         val d1 = DrawPostIt(swipeView2)
 
         swipeView2.addView(d1)
-        swipeView2.lockViews()
+        swipeView2.disableTouchSwipe()
+
+        brush.setOnClickListener {
+            swipeView2.doSwipe(false)
+            Log.e("debug", "swipe")
+        }
+//        swipeView2.lockViews()
 
         //val d2 = DrawPostIt(swipeView2)
         //val d3 = DrawPostIt(swipeView2)
