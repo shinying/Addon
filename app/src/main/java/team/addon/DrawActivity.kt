@@ -1,7 +1,6 @@
 package team.addon
 
 import android.os.Bundle
-import android.support.constraint.ConstraintSet
 import android.support.v7.app.AppCompatActivity
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
@@ -28,6 +27,8 @@ class DrawActivity : AppCompatActivity() {
         val d1 = DrawPostIt(swipeView2)
 
         swipeView2.addView(d1)
+        swipeView2.lockViews();
+
 
 
         //val d2 = DrawPostIt(swipeView2)
