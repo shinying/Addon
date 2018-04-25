@@ -1,22 +1,11 @@
 package team.addon
 
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
-import devdon.com.painter.PaintBoard
 import kotlinx.android.synthetic.main.activity_draw.*
-import java.io.File
-import java.io.FileOutputStream
-import java.util.jar.Manifest
-import android.view.View;
 
 
 class DrawActivity : AppCompatActivity() {
@@ -51,16 +40,16 @@ class DrawActivity : AppCompatActivity() {
 //        consSet2.centerHorizontallyRtl(R.id.input, R.id.post_it_board, ConstraintSet.START, 8, R.id.post_it_board, ConstraintSet.END, 8, 0.3F)
 //        consSet.applyTo(d1.consLayout2)
 
-        private lateinit var paintBoard: PaintBoard
+        private lateinit var paintBoard:PaintBoard
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_draw)
+            setContentView(R.layout.activity_main)
             setupView()
         }
 
         private fun setupView() {
-            paintBoard = findViewById(R.id.draw_board)
+            paintBoard = findViewById(R.id.layout_paint_board)
             saveButton.setOnClickListener(saveClickHandler)
         }
 
@@ -98,6 +87,7 @@ class DrawActivity : AppCompatActivity() {
             }
 
         }
+
 
 
     }

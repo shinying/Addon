@@ -27,9 +27,13 @@
         <activity
             android:name=".BuildActivity"
             android:screenOrientation="portrait" />
+<<<<<<< HEAD
+        <activity android:name=".DrawActivity"/>
+=======
 
         <activity
             android:name=".DrawActivity" />
+>>>>>>> 5d0ed4098078e8c952d50a553923f3093b840ae7
     </application>
 
 </manifest>

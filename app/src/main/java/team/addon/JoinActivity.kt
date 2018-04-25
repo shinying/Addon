@@ -19,6 +19,7 @@ import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
 import com.pawegio.kandroid.animListener
 import com.pawegio.kandroid.textWatcher
+import devdon.com.painter.DrawActivity
 import kotlinx.android.synthetic.main.activity_join.*
 import org.json.JSONObject
 
