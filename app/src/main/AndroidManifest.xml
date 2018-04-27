@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <application
         android:name=".VolleySingleton"
         android:allowBackup="true"
@@ -24,12 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".BuildActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".DrawActivity" />
+        <activity android:name=".DrawActivity" />
     </application>
 
 </manifest>
