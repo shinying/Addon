@@ -27,10 +27,6 @@
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp"
                 tools:ignore="MissingConstraints" />
-            <devdon.com.painter.PaintBoard
-                android:id="@+id/layout_paint_board"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </FrameLayout>

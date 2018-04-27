@@ -20,7 +20,7 @@ import java.io.OutputStream
 
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private var paint: Paint
+    var paint: Paint
     private var bitmap: Bitmap
     private var mCanvas: Canvas
 
@@ -38,7 +38,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         // Paint
         paint = Paint()
-        paint.setColor(Color.BLACK)
+        //paint.setColor(Color.BLUE)
         paint.setStrokeWidth(10f)
     }
 
