@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDraw"
+    android:background="@color/colorPrimaryDark"
     tools:context="team.addon.DrawActivity">
 
     <LinearLayout
@@ -17,7 +17,7 @@
     android:layout_marginTop="8dp"
     android:background="@android:color/transparent"
     android:orientation="horizontal"
-    app:layout_constraintBottom_toTopOf="@id/swipeView2"
+    app:layout_constraintBottom_toTopOf="@id/swipeView_d"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
@@ -54,9 +54,9 @@
 </LinearLayout>
 
   <com.mindorks.placeholderview.SwipePlaceHolderView
-        android:id="@+id/swipeView2"
-        android:layout_width="330dp"
-        android:layout_height="330dp"
+        android:id="@+id/swipeView_d"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
         android:layout_marginTop="8dp"
         android:translationZ="3dp"
         app:layout_constraintBottom_toBottomOf="parent"

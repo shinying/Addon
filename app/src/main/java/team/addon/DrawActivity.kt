@@ -22,10 +22,10 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import devdon.com.painter.PaintBoard
 import android.graphics.Bitmap.CompressFormat
-import team.addon.R.id.swipeView2
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 
+const val POSTIT_CNT = 5
 
 class DrawActivity : AppCompatActivity() {
 
@@ -56,17 +56,24 @@ class DrawActivity : AppCompatActivity() {
         b.compress(CompressFormat.PNG, 95, fos)*/
 
         // build the first three post-it
-        swipeView2.getBuilder<SwipePlaceHolderView, SwipeViewBuilder<SwipePlaceHolderView>>()
-                .setDisplayViewCount(5)
+        swipeView_d.getBuilder<SwipePlaceHolderView, SwipeViewBuilder<SwipePlaceHolderView>>()
                 .setIsUndoEnabled(true)
                 .setSwipeType(SwipePlaceHolderView.SWIPE_TYPE_HORIZONTAL)
                 .setSwipeDecor(SwipeDecor()
-                        .setPaddingLeft(20)
-                        .setRelativeScale(0.01f))
-        val d1 = DrawPostIt(swipeView2)
+                        .setPaddingTop(25)
+                        .setRelativeScale(0.02f))
+        val d1 = DrawPostIt(swipeView_d)
 
-        swipeView2.addView(d1)
-        swipeView2.disableTouchSwipe()
+        for(i in 1..POSTIT_CNT) {
+            swipeView_d.addView(d1)
+        }
+
+//        swipeView_d.disableTouchSwipe()
+        swipeView_d.addItemRemoveListener {
+            when (it) {
+                4 -> swipeView_d.addView(d1)
+            }
+        }
 
 
         /**

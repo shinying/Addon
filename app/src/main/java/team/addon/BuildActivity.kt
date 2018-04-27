@@ -47,12 +47,11 @@ class BuildActivity : AppCompatActivity() {
 
         // build the first three post-it
         swipeView.getBuilder<SwipePlaceHolderView, SwipeViewBuilder<SwipePlaceHolderView>>()
-                .setDisplayViewCount(5)
                 .setIsUndoEnabled(true)
                 .setSwipeType(SwipePlaceHolderView.SWIPE_TYPE_HORIZONTAL)
                 .setSwipeDecor(SwipeDecor()
-                        .setPaddingLeft(20)
-                        .setRelativeScale(0.01f))
+                        .setPaddingTop(25)
+                        .setRelativeScale(0.02f))
 
         val p1 = AddPostIt(swipeView)
         val p2 = AddPostIt(swipeView)
