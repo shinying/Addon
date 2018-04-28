@@ -18,5 +18,13 @@
     <color name="icon">#f7fbfc</color>
 
     <color name="paint_black">#000000</color>
+    <color name="paint_white">#ffffff</color>
+    <color name="paint_gray">#82a59f</color>
+    <color name="paint_red">#ad184f</color>
+    <color name="paint_brown">#915c4c</color>
+    <color name="paint_green">#859f3c</color>
+    <color name="paint_blue">#38618f</color>
+    <color name="paint_purple">#742063</color>
+
 
 </resources>
