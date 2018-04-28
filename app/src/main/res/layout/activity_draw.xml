@@ -125,6 +125,67 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.44" />
 
+    <LinearLayout
+        android:id="@+id/paint_color"
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/swipeView_d"
+        tools:layout_editor_absoluteY="480dp">
+
+        <Button
+            android:id="@+id/paint1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/paint2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/paint3"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/paint4"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/paint5"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/paint6"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/paint7"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/paint8"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>
