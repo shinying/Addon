@@ -21,10 +21,18 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import devdon.com.painter.PaintBoard
 import android.graphics.Bitmap.CompressFormat
+import android.graphics.ImageFormat.JPEG
 import android.opengl.Visibility
 import android.support.v4.content.ContextCompat
+import android.util.Base64
 import android.util.LruCache
 import android.view.View
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import org.json.JSONObject
+import team.addon.R.id.image
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -137,7 +145,19 @@ class DrawActivity : AppCompatActivity() {
             canvas.visibility = View.GONE
             swipeView_d.enableTouchSwipe()
         }
+
+        lateinit var test: Bitmap
+        var encode: String
+        encode = encodeToBase64(test, CompressFormat.JPEG, 100)
+        //Log.e("bug", "bug")
+        Log.e("encode", encode)
+
+        val params = JSONObject()
+        params.put("bitmap", encode)
+        getresponse(EndPoints.joinWall, params)
     }
+
+
 
 
     private fun getCanvasCache(view: View): Bitmap {
@@ -153,4 +173,44 @@ class DrawActivity : AppCompatActivity() {
 
         return bitmap
     }
+
+    private fun encodeToBase64(image: Bitmap, compressFormat: Bitmap.CompressFormat, quality: Int): String
+    {
+        val bitmap = image
+        val stream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
+        val result = stream.toByteArray()
+        return result.toString()
+        /**val byteArrayOS = ByteArrayOutputStream()
+        image.compress(compressFormat, quality, byteArrayOS)
+        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT)*/
+    }
+
+    private fun getresponse(url: String, params: JSONObject) {
+
+        //creating volley string request
+        val jsonObjectRequest = object : JsonObjectRequest(Request.Method.POST, url, params,
+
+                Response.Listener<JSONObject> { response ->
+
+                    Log.e("response", response.toString())
+
+                    //wallName = response.optString("wallPin", "none")
+
+                    //val p2Welcome = String.format(getString(R.string.join_wall_name), wallName)
+
+                    //post.setText(p2Welcome, getString(R.string.hint_member_name))
+                },
+
+                Response.ErrorListener { volleyError ->
+                    Log.e("err", volleyError.toString())
+
+                }) { }
+
+        //adding request to queue
+        VolleySingleton.instance?.addToRequestQueue(jsonObjectRequest)
+    }
 }
+
+
+
