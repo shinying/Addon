@@ -32,7 +32,6 @@
             android:name=".DrawActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".EditActivity"/>
     </application>
 
 </manifest>

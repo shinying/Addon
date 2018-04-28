@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -20,26 +21,28 @@ import java.io.OutputStream
 
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    var paint: Paint
-    private var bitmap: Bitmap
+
+    var bitmap: Bitmap
+
+    private var paint: Paint
+
     private var mCanvas: Canvas
 
     private var startX:Float = 0f
     private var startY:Float = 0f
 
     init {
+
         // bitmap
         val width = Resources.getSystem().displayMetrics.widthPixels
         bitmap = Bitmap.createBitmap(width, 330 * resources.displayMetrics.density.toInt(), Bitmap.Config.RGB_565)
 
         // Canvas
         mCanvas = Canvas(bitmap)
-        mCanvas.drawColor(resources.getColor(R.color.main))
+        mCanvas.drawColor(resources.getColor(R.color.post_it_yellow))
 
         // Paint
         paint = Paint()
-        //paint.setColor(Color.BLUE)
-        paint.setStrokeWidth(10f)
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -66,12 +69,30 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 invalidate()
             }
         }
-
         return true
     }
 
-    /**fun saveBitmap(stream: OutputStream) {
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+    fun setPaint(){
+        paint.style = Paint.Style.STROKE
+        paint.isAntiAlias = true
+        setPaintColor()
+        setPaintWidth()
+        setPaintCap()
+    }
 
-    }*/
+    fun setPaintColor(mColor: Int = R.color.paint_black) {
+        paint.color = ContextCompat.getColor(context, mColor)
+    }
+
+    fun setPaintWidth(width: Float = 10f) {
+        paint.strokeWidth = width
+    }
+
+    fun setPaintCap(cap: Paint.Cap = Paint.Cap.ROUND) {
+        paint.strokeCap = cap
+    }
+
+    fun saveBitmap(stream: OutputStream) {
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+    }
 }

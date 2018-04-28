@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">@android:color/transparent</color>
-    <color name="colorPrimaryDark">#37474f</color>
-    <color name="colorPrimaryDraw">#ffffff</color>
+    <color name="colorPrimaryDark">#6CAB9A</color>
+
+    <color name="background">#77bca9</color>
     <color name="colorAccent">#364f6b</color>
+
     <color name="actionBarText">#37474f</color>
     <color name="action_bar_text" />
-    <color name="main">#ffd54f</color>
+
+    <color name="post_it_yellow">#ffec78</color>
+    <color name="post_it_pink">#ffd0d6</color>
+
+    <color name="shadow_yellow">#F2e072</color>
+    <color name="shadow_pink">#F0c4c9</color>
+
     <color name="icon">#f7fbfc</color>
-    <color name="shadow">#f0c84a</color>
+
+    <color name="paint_black">#000000</color>
 
 </resources>

@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/post_attr"
                 android:scaleType="centerInside"
-                android:src="@drawable/post_it"
+                android:src="@drawable/post_it_pink"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp"
                 tools:ignore="MissingConstraints" />

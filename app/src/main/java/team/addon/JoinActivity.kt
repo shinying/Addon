@@ -35,8 +35,6 @@ class JoinActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_join)
 
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-
         dot1.alpha = 0.8F
 
         // Build the first three post-it

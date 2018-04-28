@@ -40,8 +40,6 @@ class BuildActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_build)
 
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-
         dot1.alpha = 0.8F
 
 
