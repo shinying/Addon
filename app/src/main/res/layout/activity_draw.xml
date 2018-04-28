@@ -95,7 +95,6 @@
             app:srcCompat="@drawable/ic_done" />
     </LinearLayout>
 
-
     <com.mindorks.placeholderview.SwipePlaceHolderView
         android:id="@+id/swipeView_d"
         android:layout_width="match_parent"
