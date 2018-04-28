@@ -3,6 +3,7 @@ package team.addon
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -15,25 +16,22 @@ import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
 import kotlinx.android.synthetic.main.activity_draw.*
-import android.graphics.Bitmap
 import android.os.Parcelable
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import devdon.com.painter.PaintBoard
 import android.graphics.Bitmap.CompressFormat
-import android.graphics.Color
-import android.graphics.Paint
 import android.opengl.Visibility
+import android.support.v4.content.ContextCompat
 import android.util.LruCache
 import android.view.View
+import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 
-const val POSTIT_CNT = 5
-
 class DrawActivity : AppCompatActivity() {
 
-    private var content = false
+    private var curPost = 0
 
     private var step = 0
 
@@ -41,30 +39,25 @@ class DrawActivity : AppCompatActivity() {
 
     private lateinit var canvasCache : LruCache<Int, Bitmap>
 
+    private lateinit var tempCanvas: Bitmap
+
+    private var cacheBitmapKey = 1
+
+    private var cacheBitmapDirtyKey = 0
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_draw)
 
-
-
-        // set the bitmap to be the view
-        /**val parent = findViewById<View>(R.id.signImageParent) as RelativeLayout
-        val myDrawView = PaintBoard(this)
-        parent.addView(myDrawView)
-
-        parent.isDrawingCacheEnabled = true
-        val b = parent.drawingCache
-
-        var fos: FileOutputStream? = null
-        try {
-            fos = FileOutputStream(getFileName())
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        }
-        b.compress(CompressFormat.PNG, 95, fos)*/
-
         // build posts-it for swipeView
-        val drawPostIt = DrawPostIt(swipeView_d)
+        val d1 = DrawPostIt(swipeView_d)
+        val d2 = DrawPostIt(swipeView_d)
+        val d3 = DrawPostIt(swipeView_d)
+        val d4 = DrawPostIt(swipeView_d)
+        val d5 = DrawPostIt(swipeView_d)
+
+        val postPile = arrayOf(d1,d2,d3,d4,d5)
 
         swipeView_d.getBuilder<SwipePlaceHolderView, SwipeViewBuilder<SwipePlaceHolderView>>()
                 .setIsUndoEnabled(true)
@@ -73,13 +66,23 @@ class DrawActivity : AppCompatActivity() {
                         .setPaddingTop(25)
                         .setRelativeScale(0.02f))
 
-        for(i in 1..POSTIT_CNT) {
-            swipeView_d.addView(drawPostIt)
-        }
+        swipeView_d.addView(d1)
+        swipeView_d.addView(d2)
+        swipeView_d.addView(d3)
+        swipeView_d.addView(d4)
+        swipeView_d.addView(d5)
 
         swipeView_d.addItemRemoveListener {
             when (it) {
-                4 -> swipeView_d.addView(drawPostIt)
+                4 -> {
+                    swipeView_d.addView(postPile[curPost])
+
+                    curPost += 1
+                    curPost %= 5
+
+                    canvas.clearCanvas()
+                    canvas.hasContent = false
+                }
             }
         }
 
@@ -101,77 +104,53 @@ class DrawActivity : AppCompatActivity() {
             draw_bar.visibility = View.VISIBLE
             canvas.visibility = View.VISIBLE
             swipeView_d.disableTouchSwipe()
-            content = true
+
+            if(canvas.hasContent){
+                tempCanvas = getCanvasCache(canvas)
+            }
         }
 
         done.setOnClickListener {
-            drawPostIt.frame.setImageBitmap(canvas.bitmap)
+
+            postPile[curPost].frame.setImageBitmap(getCanvasCache(canvas))
+
             step += 1
             draw_bar.visibility = View.GONE
             tool_bar.visibility = View.VISIBLE
             canvas.visibility = View.GONE
             swipeView_d.enableTouchSwipe()
 
-            drawPostIt.frame.setImageBitmap(canvas.drawingCache)
+            canvas.hasContent = true
         }
-    }
 
-
-    private fun addBitmapToCache(step: Int, bitmap: Bitmap) {
-        if (getBitmapFromCache(step) == null) {
-            canvasCache.put(step, bitmap)
-        }
-    }
-
-    private fun getBitmapFromCache(step: Int): Bitmap? {
-        return canvasCache.get(step)
-    }
-
-    private fun loadBitmap(step: Int, drawPostIt: DrawPostIt) {
-
-        val bitmap = getBitmapFromCache(step)
-        if (bitmap != null) {
-            drawPostIt.frame.setImageBitmap(bitmap)
-        } else {
-            drawPostIt.frame.setImageResource(R.drawable.post_it_yellow)
-        }
-    }
-
-
-
-    /**private fun checkWritable():Boolean {
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),0)
-            return false
-        } else {
-            return true
-        }
-    }
-
-
-    private val saveClickHandler = View.OnClickListener {
-        view -> if(checkWritable()){
-            try {
-                val fileName = (System.currentTimeMillis() / 1000).toString() + ".jpg"
-                val file = File(Environment.getExternalStorageDirectory(), fileName)
-                val stream = FileOutputStream(file)
-                paintBoard.saveBitmap(stream)
-                stream.close()
-
-                val intent = Intent()
-                intent.setAction(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
-                intent.setData(Uri.fromFile(Environment.getExternalStorageDirectory()))
-                sendBroadcast(intent)
-
-                Toast.makeText(this, "Save Success", Toast.LENGTH_SHORT).show()
-
-            } catch(e:Exception) {
-                println(e)
-                Toast.makeText(this, "Save Failed", Toast.LENGTH_SHORT).show()
-
+        clear.setOnClickListener {
+            if(canvas.hasContent){
+                postPile[curPost].frame.setImageBitmap(tempCanvas)
+                canvas.setBitmap(tempCanvas)
             }
+            else {
+                canvas.clearCanvas()
+            }
+
+            draw_bar.visibility = View.GONE
+            tool_bar.visibility = View.VISIBLE
+            canvas.visibility = View.GONE
+            swipeView_d.enableTouchSwipe()
         }
+    }
 
-    }*/
 
+    private fun getCanvasCache(view: View): Bitmap {
+
+        val bitmap = Bitmap.createBitmap(view.width, view.height,
+        Bitmap.Config.RGB_565)
+        bitmap.density = resources.displayMetrics.densityDpi
+
+        val canvas = Canvas(bitmap)
+
+        view.draw(canvas)
+        canvas.setBitmap(null)
+
+        return bitmap
+    }
 }

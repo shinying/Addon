@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -22,33 +23,38 @@ import java.io.OutputStream
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    var bitmap: Bitmap
+    private lateinit var mBitmap: Bitmap
 
-    private var paint: Paint
+    private lateinit var mCanvas: Canvas
 
-    private var mCanvas: Canvas
+    private var mPaint: Paint
 
     private var startX:Float = 0f
+
     private var startY:Float = 0f
+
+    var hasContent = false
+
+    var bgColor = R.color.post_it_yellow
 
     init {
 
-        // bitmap
+        // Bitmap
         val width = Resources.getSystem().displayMetrics.widthPixels
-        bitmap = Bitmap.createBitmap(width, 330 * resources.displayMetrics.density.toInt(), Bitmap.Config.RGB_565)
+        val dfBtmp = Bitmap.createBitmap(width, 330 * resources.displayMetrics.density.toInt(), Bitmap.Config.RGB_565)
+        setBitmap(dfBtmp)
 
         // Canvas
-        mCanvas = Canvas(bitmap)
-        mCanvas.drawColor(resources.getColor(R.color.post_it_yellow))
+        clearCanvas()
 
         // Paint
-        paint = Paint()
+        mPaint = Paint()
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        canvas!!.drawBitmap(bitmap, 0f, 0f, paint)
+        canvas!!.drawBitmap(mBitmap, 0f, 0f, mPaint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -61,7 +67,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 val stopX = event.x
                 val stopY = event.y
 
-                mCanvas.drawLine(startX, startY, stopX, stopY, paint)
+                mCanvas.drawLine(startX, startY, stopX, stopY, mPaint)
                 startX = event.x
                 startY = event.y
 
@@ -71,28 +77,38 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         }
         return true
     }
+    
+    fun setBitmap(b: Bitmap) {
+        mBitmap = b
+        mCanvas = Canvas(b)
+
+    }
 
     fun setPaint(){
-        paint.style = Paint.Style.STROKE
-        paint.isAntiAlias = true
+        mPaint.style = Paint.Style.STROKE
+        mPaint.isAntiAlias = true
         setPaintColor()
         setPaintWidth()
         setPaintCap()
     }
 
     fun setPaintColor(mColor: Int = R.color.paint_black) {
-        paint.color = ContextCompat.getColor(context, mColor)
+        mPaint.color = ContextCompat.getColor(context, mColor)
     }
 
     fun setPaintWidth(width: Float = 10f) {
-        paint.strokeWidth = width
+        mPaint.strokeWidth = width
     }
 
     fun setPaintCap(cap: Paint.Cap = Paint.Cap.ROUND) {
-        paint.strokeCap = cap
+        mPaint.strokeCap = cap
+    }
+
+    fun clearCanvas() {
+        mCanvas.drawColor(ContextCompat.getColor(context, bgColor))
     }
 
     fun saveBitmap(stream: OutputStream) {
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
     }
 }
