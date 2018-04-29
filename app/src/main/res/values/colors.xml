@@ -16,6 +16,7 @@
     <color name="shadow_pink">#F0c4c9</color>
 
     <color name="icon">#f7fbfc</color>
+    <color name="icon_bg">#64f7fbfc</color>
 
     <color name="paint_black">#000000</color>
     <color name="paint_white">#ffffff</color>
