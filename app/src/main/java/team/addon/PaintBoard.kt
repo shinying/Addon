@@ -111,4 +111,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     fun saveBitmap(stream: OutputStream) {
         mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
     }
+
+    fun paintWidth(): Float {
+        return mPaint.strokeWidth
+    }
 }
