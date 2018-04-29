@@ -145,7 +145,11 @@ class JoinActivity : AppCompatActivity() {
                     dot2.visibility = View.GONE
                     dot3.visibility = View.GONE
 
-                    startActivity(Intent(this, DrawActivity::class.java))
+                    val intent = Intent(this, DrawActivity::class.java)
+                    intent.putExtra("wallPin", wallPin)
+                    intent.putExtra("name", memberName)
+
+                    startActivity(intent)
                 }
             }
         }

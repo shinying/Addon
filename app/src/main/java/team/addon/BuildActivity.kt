@@ -1,5 +1,6 @@
 package team.addon
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.constraint.ConstraintSet
@@ -180,6 +181,12 @@ class BuildActivity : AppCompatActivity() {
                     dot1.visibility = View.GONE
                     dot2.visibility = View.GONE
                     dot3.visibility = View.GONE
+
+                    val intent = Intent(this, DrawActivity::class.java)
+                    intent.putExtra("wallPin", wallPin)
+                    intent.putExtra("name", builderName)
+
+                    startActivity(intent)
                 }
             }
         }

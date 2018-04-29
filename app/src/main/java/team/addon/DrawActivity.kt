@@ -21,6 +21,10 @@ import java.io.ByteArrayOutputStream
 
 class DrawActivity : AppCompatActivity() {
 
+    private var wallPin = ""
+
+    private var name = ""
+
     private var curPost = 0
 
     private var step = 0
@@ -44,6 +48,12 @@ class DrawActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_draw)
+
+        val extras = intent.extras
+        if(extras != null) {
+            wallPin = extras.getString("wallPin")
+            name = extras.getString("name")
+        }
 
         // region handle swipeView
 
@@ -253,12 +263,14 @@ class DrawActivity : AppCompatActivity() {
 
     private fun sendPostIt() {
 
-        val base64 = BitmapToBase64(postIt2Stick)
-        val stringToWall = JSONObject()
-        stringToWall.put("postIt", base64)
+        val base64 = bitmapToBase64(postIt2Stick)
+        val passToWall = JSONObject()
+        passToWall.put("wallPin", wallPin)
+        passToWall.put("name", name)
+        passToWall.put("postIt", base64)
 
         //creating volley string request
-        val jsonObjectRequest = object : JsonObjectRequest(Request.Method.POST, EndPoints.stick, stringToWall,
+        val jsonObjectRequest = object : JsonObjectRequest(Request.Method.POST, EndPoints.stick, passToWall,
 
                 Response.Listener<JSONObject> { response ->
 
@@ -281,7 +293,7 @@ class DrawActivity : AppCompatActivity() {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, metrics).toInt()
     }
 
-    fun BitmapToBase64(image: Bitmap):String {
+    private fun bitmapToBase64(image: Bitmap):String {
         val stream = ByteArrayOutputStream()
         image.compress(Bitmap.CompressFormat.PNG, 90, stream)
         val bytes = stream.toByteArray()
