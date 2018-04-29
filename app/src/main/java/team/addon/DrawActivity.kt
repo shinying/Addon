@@ -1,7 +1,6 @@
 package team.addon
 
 import android.graphics.Bitmap
-import android.graphics.Bitmap.CompressFormat
 import android.graphics.Canvas
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -16,10 +15,9 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
-import kotlinx.android.synthetic.main.activity_draw.*
 import org.json.JSONObject
+import kotlinx.android.synthetic.main.activity_draw.*
 import java.io.ByteArrayOutputStream
-import java.io.File
 
 class DrawActivity : AppCompatActivity() {
 
@@ -47,6 +45,8 @@ class DrawActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_draw)
 
+        // region handle swipeView
+
         // build posts-it for swipeView
         val d1 = DrawPostIt(swipeView_d)
         val d2 = DrawPostIt(swipeView_d)
@@ -72,7 +72,7 @@ class DrawActivity : AppCompatActivity() {
         swipeView_d.addItemRemoveListener {
             when (it) {
                 4 -> {
-                    if(!sent) {
+                    if(!sent && canvas.hasContent) {
                         postIt2Stick = getCanvasCache(canvas)
                         sendPostIt()
                         sent = true
@@ -90,9 +90,12 @@ class DrawActivity : AppCompatActivity() {
             }
         }
 
+        // endregion
+
         // handle paintBoard
         canvas.setPaint()
 
+        // region handle choosing color
         // set paint color
         curPaintColor = paint1
 
@@ -119,9 +122,9 @@ class DrawActivity : AppCompatActivity() {
                 }
             }
         }
+        // endregion
 
-
-        // handle clicking event
+        // region handle clicking event
         brush.setOnClickListener {
 
             // set up UI
@@ -195,8 +198,6 @@ class DrawActivity : AppCompatActivity() {
         }
 
 
-        // set paint color
-        curPaintColor = paint1
         eraser.setOnClickListener {
 
             // back to drawing
@@ -228,6 +229,8 @@ class DrawActivity : AppCompatActivity() {
                 erasing = true
             }
         }
+
+        // endregion
 
     }
 
