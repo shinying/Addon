@@ -74,6 +74,7 @@ class DrawActivity : AppCompatActivity() {
                 4 -> {
                     if(!sent) {
                         postIt2Stick = getCanvasCache(canvas)
+                        sendPostIt()
                         sent = true
                     }
 
@@ -246,23 +247,6 @@ class DrawActivity : AppCompatActivity() {
         return bitmap
     }
 
-    /**companion object {
-        fun encoder(filePath: String): String{
-            val bytes = File(filePath).readBytes()
-            val base64 = Base64.getEncoder().encodeToString(bytes)
-            return base64
-        }*/
-    /**private fun encodeToBase64(image: Bitmap, compressFormat: Bitmap.CompressFormat, quality: Int): String
-    {
-        val bitmap = image
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
-        val result = stream.toByteArray()
-        return result.toString()
-        /**val byteArrayOS = ByteArrayOutputStream()
-        image.compress(compressFormat, quality, byteArrayOS)
-        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT)*/
-    }*/
 
     private fun sendPostIt() {
 
