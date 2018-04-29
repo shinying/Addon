@@ -1,40 +1,23 @@
 package team.addon
 
 import android.graphics.Bitmap
+import android.graphics.Bitmap.CompressFormat
 import android.graphics.Canvas
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.ScaleAnimation
 import android.widget.ImageButton
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
 import kotlinx.android.synthetic.main.activity_draw.*
-import android.os.Parcelable
-import devdon.com.painter.PaintBoard
-import android.graphics.Bitmap.CompressFormat
-import android.graphics.ImageFormat.JPEG
-import android.opengl.Visibility
-import android.support.v4.content.ContextCompat
-import android.util.Base64
-import android.util.LruCache
-import android.view.View
-
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
 import org.json.JSONObject
-import team.addon.R.id.image
 import java.io.ByteArrayOutputStream
-
-import android.widget.*
-import kotlinx.android.synthetic.main.activity_draw.view.*
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
 
 class DrawActivity : AppCompatActivity() {
 
@@ -231,17 +214,6 @@ class DrawActivity : AppCompatActivity() {
                 erasing = false
             }
 
-        }
-        paint6.setOnClickListener {
-            canvas.setPaintColor(R.color.paint_green)
-            changePaintColor(curPaintColor, paint6)
-        }
-        paint7.setOnClickListener {
-            canvas.setPaintColor(R.color.paint_blue)
-            changePaintColor(curPaintColor, paint7)
-        }
-        paint8.setOnClickListener {
-            canvas.setPaintColor(R.color.paint_purple)
             // choose the color of background and start to erase
             else {
                 colorBfErase = when (curPaintColor) {
@@ -251,13 +223,22 @@ class DrawActivity : AppCompatActivity() {
                     paint5 -> colorSet[4]
                     paint6 -> colorSet[5]
                     paint7 -> colorSet[6]
+                    paint8 -> colorSet[7]
+                    else -> colorSet[0]
+                }
+                widthBfErase = canvas.paintWidth()
+                canvas.setPaintColor(canvas.bgColor)
+                canvas.setPaintWidth(80F)
+                paint_palette.visibility = View.GONE
+                eraser.setImageDrawable(resources.getDrawable(R.drawable.ic_eraser_on, theme))
+                erasing = true
+            }
         }
 
     }
 
 
-
-
+    // take a screen shot of a view
     private fun getCanvasCache(view: View): Bitmap {
 
         val bitmap = Bitmap.createBitmap(view.width, view.height,
