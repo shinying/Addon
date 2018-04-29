@@ -108,7 +108,6 @@ class BuildActivity : AppCompatActivity() {
         }
 
 
-
         swipeView.addItemRemoveListener {
             when (it) {
                 2 -> {

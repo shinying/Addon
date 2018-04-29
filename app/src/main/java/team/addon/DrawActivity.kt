@@ -39,6 +39,8 @@ class DrawActivity : AppCompatActivity() {
 
     private var sent = false
 
+    private var firstDraw = true
+
     private lateinit var postIt2Stick: Bitmap
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,6 +72,11 @@ class DrawActivity : AppCompatActivity() {
         swipeView_d.addItemRemoveListener {
             when (it) {
                 4 -> {
+                    if(!sent) {
+                        postIt2Stick = getCanvasCache(canvas)
+                        sent = true
+                    }
+
                     swipeView_d.addView(postPile[curPost])
 
                     curPost += 1
@@ -77,16 +84,8 @@ class DrawActivity : AppCompatActivity() {
 
                     canvas.clearCanvas()
                     canvas.hasContent = false
-
                     sent = false
                 }
-            }
-        }
-
-        swipeView_d.addItemRemoveListener {
-            if(!sent) {
-                postIt2Stick = getCanvasCache(canvas)
-                sent = true
             }
         }
 
@@ -135,9 +134,10 @@ class DrawActivity : AppCompatActivity() {
             if(canvas.hasContent){
                 tempCanvas = getCanvasCache(canvas)
             }
-            if(curPaintColor == paint1){
+            if(firstDraw){
                 paint1.animate().scaleXBy(0.3F).scaleYBy(0.3F)
                 paint1.setPadding(bigPadding, bigPadding, bigPadding, bigPadding)
+                firstDraw = false
             }
         }
 
