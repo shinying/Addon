@@ -45,6 +45,8 @@ class DrawActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_draw)
 
+        // region handle swipeView
+
         // build posts-it for swipeView
         val d1 = DrawPostIt(swipeView_d)
         val d2 = DrawPostIt(swipeView_d)
@@ -70,7 +72,7 @@ class DrawActivity : AppCompatActivity() {
         swipeView_d.addItemRemoveListener {
             when (it) {
                 4 -> {
-                    if(!sent) {
+                    if(!sent && canvas.hasContent) {
                         postIt2Stick = getCanvasCache(canvas)
                         sent = true
                     }
@@ -87,9 +89,12 @@ class DrawActivity : AppCompatActivity() {
             }
         }
 
+        // endregion
+
         // handle paintBoard
         canvas.setPaint()
 
+        // region handle choosing color
         // set paint color
         curPaintColor = paint1
 
@@ -116,9 +121,9 @@ class DrawActivity : AppCompatActivity() {
                 }
             }
         }
+        // endregion
 
-
-        // handle clicking event
+        // region handle clicking event
         brush.setOnClickListener {
 
             // set up UI
@@ -191,18 +196,6 @@ class DrawActivity : AppCompatActivity() {
             }
         }
 
-        lateinit var test: Bitmap
-        var encode: String
-        encode = encodeToBase64(test, CompressFormat.JPEG, 100)
-        //Log.e("bug", "bug")
-        Log.e("encode", encode)
-
-        val params = JSONObject()
-        params.put("bitmap", encode)
-        getresponse(EndPoints.joinWall, params)
-
-        // set paint color
-        curPaintColor = paint1
         eraser.setOnClickListener {
 
             // back to drawing
@@ -235,6 +228,18 @@ class DrawActivity : AppCompatActivity() {
             }
         }
 
+        // endregion
+
+//        lateinit var test: Bitmap
+//        var encode: String
+//        encode = encodeToBase64(test, CompressFormat.JPEG, 100)
+//        //Log.e("bug", "bug")
+//        Log.e("encode", encode)
+//
+//        val params = JSONObject()
+//        params.put("bitmap", encode)
+//        getresponse(EndPoints.joinWall, params)
+
     }
 
 
@@ -253,42 +258,36 @@ class DrawActivity : AppCompatActivity() {
         return bitmap
     }
 
-    private fun encodeToBase64(image: Bitmap, compressFormat: Bitmap.CompressFormat, quality: Int): String
-    {
-        val bitmap = image
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
-        val result = stream.toByteArray()
-        return result.toString()
-        /**val byteArrayOS = ByteArrayOutputStream()
-        image.compress(compressFormat, quality, byteArrayOS)
-        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT)*/
-    }
-
-    private fun getresponse(url: String, params: JSONObject) {
-
-        //creating volley string request
-        val jsonObjectRequest = object : JsonObjectRequest(Request.Method.POST, url, params,
-
-                Response.Listener<JSONObject> { response ->
-
-                    Log.e("response", response.toString())
-
-                    //wallName = response.optString("wallPin", "none")
-
-                    //val p2Welcome = String.format(getString(R.string.join_wall_name), wallName)
-
-                    //post.setText(p2Welcome, getString(R.string.hint_member_name))
-                },
-
-                Response.ErrorListener { volleyError ->
-                    Log.e("err", volleyError.toString())
-
-                }) {}
-
-        //adding request to queue
-        VolleySingleton.instance?.addToRequestQueue(jsonObjectRequest)
-    }
+//    private fun encodeToBase64(image: Bitmap, compressFormat: Bitmap.CompressFormat, quality: Int): String
+//    {
+//        val bitmap = image
+//        val stream = ByteArrayOutputStream()
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
+//        val result = stream.toByteArray()
+//        return result.toString()
+//        /**val byteArrayOS = ByteArrayOutputStream()
+//        image.compress(compressFormat, quality, byteArrayOS)
+//        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT)*/
+//    }
+//
+//    private fun getresponse(url: String, params: JSONObject) {
+//
+//        //creating volley string request
+//        val jsonObjectRequest = object : JsonObjectRequest(Request.Method.POST, url, params,
+//
+//                Response.Listener<JSONObject> { response ->
+//
+//                    Log.e("response", response.toString())
+//                },
+//
+//                Response.ErrorListener { volleyError ->
+//                    Log.e("err", volleyError.toString())
+//
+//                }) {}
+//
+//        //adding request to queue
+//        VolleySingleton.instance?.addToRequestQueue(jsonObjectRequest)
+//    }
 
 
     // turn dp to pixel
