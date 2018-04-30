@@ -1,8 +1,12 @@
 package team.addon
 
+import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.net.Uri
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Base64
 import android.util.Log
@@ -15,8 +19,9 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.mindorks.placeholderview.SwipeDecor
 import com.mindorks.placeholderview.SwipePlaceHolderView
 import com.mindorks.placeholderview.SwipeViewBuilder
-import org.json.JSONObject
 import kotlinx.android.synthetic.main.activity_draw.*
+import org.json.JSONObject
+import team.addon.R.id.*
 import java.io.ByteArrayOutputStream
 
 class DrawActivity : AppCompatActivity() {
@@ -24,6 +29,8 @@ class DrawActivity : AppCompatActivity() {
     private var wallPin = ""
 
     private var name = ""
+
+    private var wallName = ""
 
     private var curPost = 0
 
@@ -52,8 +59,18 @@ class DrawActivity : AppCompatActivity() {
         val extras = intent.extras
         if(extras != null) {
             wallPin = extras.getString("wallPin")
+            wallName = extras.getString("wallName")
             name = extras.getString("name")
         }
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(String.format(getString(R.string.show_wall_pin), wallName, wallPin))
+
+        builder.setPositiveButton(R.string.ok, DialogInterface.OnClickListener { dialogInterface, i ->
+        })
+        val dialog = builder.create()
+
+        wall_name.text = wallName
 
         // region handle swipeView
 
@@ -135,6 +152,20 @@ class DrawActivity : AppCompatActivity() {
         // endregion
 
         // region handle clicking event
+        wall_name.setOnClickListener {
+            dialog.show()
+        }
+
+        wall.setOnClickListener {
+            val intent = Intent(this, WallActivity::class.java)
+            intent.putExtra("wallPin", wallPin)
+            startActivity(intent)
+
+//            val uri = Uri.parse(String.format(getString(R.string.wall_URL), wallPin))
+//            val intent = Intent(Intent.ACTION_VIEW,uri)
+//            startActivity(intent)
+        }
+
         brush.setOnClickListener {
 
             // set up UI

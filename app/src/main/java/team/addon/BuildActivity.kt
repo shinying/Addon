@@ -1,9 +1,11 @@
 package team.addon
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.support.constraint.ConstraintSet
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.util.Range
@@ -19,6 +21,7 @@ import com.mindorks.placeholderview.SwipeViewBuilder
 import com.pawegio.kandroid.textWatcher
 import kotlinx.android.synthetic.main.activity_build.*
 import org.json.JSONObject
+import team.addon.R.id.*
 
 
 const val MAX_TAG = 3
@@ -181,12 +184,6 @@ class BuildActivity : AppCompatActivity() {
                     dot1.visibility = View.GONE
                     dot2.visibility = View.GONE
                     dot3.visibility = View.GONE
-
-                    val intent = Intent(this, DrawActivity::class.java)
-                    intent.putExtra("wallPin", wallPin)
-                    intent.putExtra("name", builderName)
-
-                    startActivity(intent)
                 }
             }
         }
@@ -229,8 +226,22 @@ class BuildActivity : AppCompatActivity() {
         val jsonObjectRequest = object : JsonObjectRequest(Request.Method.POST, url, params,
 
                 Response.Listener<JSONObject> { response ->
+                    Log.e("response", response.toString())
+                    wallPin = response.getString("wallpin")
 
-                    wallPin = response.optString("wallPin", "0000")
+                    intent = Intent(this, DrawActivity::class.java)
+                    intent.putExtra("wallPin", wallPin)
+                    intent.putExtra("wallName", wallName)
+                    intent.putExtra("name", builderName)
+
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle(String.format(getString(R.string.show_wall_pin), wallName, wallPin))
+
+                    builder.setPositiveButton(R.string.ok, DialogInterface.OnClickListener { dialogInterface, i ->
+                        startActivity(intent)
+                    })
+                    val dialog = builder.create()
+                    dialog.show()
                 },
 
                 Response.ErrorListener { volleyError ->

@@ -21,6 +21,7 @@ import com.pawegio.kandroid.animListener
 import com.pawegio.kandroid.textWatcher
 import kotlinx.android.synthetic.main.activity_join.*
 import org.json.JSONObject
+import team.addon.R.id.*
 
 
 class JoinActivity : AppCompatActivity() {
@@ -147,6 +148,7 @@ class JoinActivity : AppCompatActivity() {
 
                     val intent = Intent(this, DrawActivity::class.java)
                     intent.putExtra("wallPin", wallPin)
+                    intent.putExtra("wallName", wallName)
                     intent.putExtra("name", memberName)
 
                     startActivity(intent)
@@ -175,7 +177,7 @@ class JoinActivity : AppCompatActivity() {
 
                     Log.e("response", response.toString())
 
-                    wallName = response.optString("wallPin", "none")
+                    wallName = response.optString("wallname", "none")
 
                     val p2Welcome = String.format(getString(R.string.join_wall_name), wallName)
 

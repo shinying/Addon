@@ -33,6 +33,16 @@
             android:padding="12dp"
             app:srcCompat="@drawable/ic_wall" />
 
+        <TextView
+            android:id="@+id/wall_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Wall"
+            android:textColor="@color/icon"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
         <Space
             android:layout_width="0dp"
             android:layout_height="wrap_content"

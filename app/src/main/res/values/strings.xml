@@ -22,4 +22,9 @@
     <string name="pub">Public</string>
     <string name="mid_bar">\u0020\u0020|\u0020\u0020</string>
     <string name="pri">Private</string>
+
+    <string name="show_wall_pin">The pin for %1$s is %2$s.</string>
+    <string name="ok">Share it!</string>
+
+    <string name="wall_URL">https://postwallapp.herokuapp.com/display.php?wallpin=%1$s</string>
 </resources>
